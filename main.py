@@ -1,9 +1,16 @@
-from matplotlib import pyplot as yae # i love me some bad naming :)
-import pandas                        # yeah i still can't believe it, when i was coding ~4 years ago
-import numpy as np                   # i used to name my variables weird stuff like 'butts'
-import time                          # 'poop', 'pee' and all the likeness. weiiiiiiiird.
-import tkinter                       # i also had my code organized in the most odd ways out there
-import multiprocessing               # like entire functions in one line sorta odd.
+from matplotlib import pyplot as yae    # i love me some bad naming :)
+import pandas
+import numpy as np
+import time
+import tkinter
+from Modules.TextInput import TextInput
+
+# yeah i still can't believe it, when i was coding ~4 years ago
+# i used to name my variables weird stuff like 'butts'
+# 'poop', 'pee' and all the likeness. weiiiiiiiird.
+# i also had my code organized in the most odd ways out there
+# like entire functions in one line sorta odd.
+# nowadays the worse i do is just giving them character names, a good bit different
 
 
 '''
@@ -103,20 +110,15 @@ def textFocusOut(input: tkinter.Entry):
 >>>>Space to declare new elements to the tkinter widget =======================================
 '''
 # entries which are all used for generating a graph.
-goOntologyEntry = tkinter.Entry(window, fg='grey')
-goOntologyEntry.insert(0, 'GO Ontology ID')
+goOntologyEntry = TextInput(window, defaultText="Go Ontology ID")
 
-clusterNameEntry = tkinter.Entry(window, fg='grey')
-clusterNameEntry.insert(0, 'Cluster name')
+clusterNameEntry = TextInput(window, defaultText="Cluster Name")
 
-clusterNumEntry = tkinter.Entry(window, fg='grey')
-clusterNumEntry.insert(0, 'Num of cluster(s)')
+clusterNumEntry = TextInput(window, defaultText="Number of Cluster(s)")
 
-minRange = tkinter.Entry(window, fg='grey')
-minRange.insert(0, 'Range minimum')
+minRange = TextInput(window, defaultText="Range Minimum")
 
-maxRange = tkinter.Entry(window, fg='grey')
-maxRange.insert(0, 'Range maximum')
+maxRange = TextInput(window, defaultText="Range Maximum")
 
 # the other parts
 dropdown = tkinter.OptionMenu(window, dropdownText, *correctionMethods)
@@ -127,30 +129,11 @@ submitButton = tkinter.Button(window, text="Submit Graph", height=10, width=20)
 '''
 >>>>Packing / Placing / Binding all defined elements =========================================
 '''
-goOntologyEntry.pack()
-goOntologyEntry.place(x=0,y=0)
-goOntologyEntry.bind("<FocusIn>", lambda x: textFocusIn(goOntologyEntry))
-goOntologyEntry.bind("<FocusOut>", lambda x: textFocusOut(goOntologyEntry))
-
-clusterNameEntry.pack()
-clusterNameEntry.place(x=0, y=25)
-clusterNameEntry.bind("<FocusIn>", lambda x: textFocusIn(clusterNameEntry))
-clusterNameEntry.bind("<FocusOut>", lambda x: textFocusOut(clusterNameEntry))
-
-clusterNumEntry.pack()
-clusterNumEntry.place(x=0, y=50)
-clusterNumEntry.bind("<FocusIn>", lambda x: textFocusIn(clusterNumEntry))
-clusterNumEntry.bind("<FocusOut>", lambda x: textFocusOut(clusterNumEntry))
-
-minRange.pack()
-minRange.place(x=0, y=75)
-minRange.bind("<FocusIn>", lambda x: textFocusIn(minRange))
-minRange.bind("<FocusOut>", lambda x: textFocusOut(minRange))
-
-maxRange.pack()
-maxRange.place(x=0, y=100)
-maxRange.bind("<FocusIn>", lambda x: textFocusIn(maxRange))
-maxRange.bind("<FocusOut>", lambda x: textFocusOut(maxRange))
+goOntologyEntry.packAndPlace(xPos=0, yPos=0)
+clusterNameEntry.packAndPlace(xPos=0, yPos=25)
+clusterNumEntry.packAndPlace(xPos=0, yPos=50)
+minRange.packAndPlace(xPos=0, yPos=75)
+maxRange.packAndPlace(xPos=0, yPos=100)
 
 dropdown.pack()
 dropdown.place(x=0,y=125)
