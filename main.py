@@ -1,16 +1,14 @@
-from matplotlib import pyplot as yae    # i love me some bad naming :)
-import pandas
-import numpy as np
-import time
 import tkinter
 from Modules.TextInput import TextInput
+from Modules import Util
+import Modules.OntoPlotter as oPlot
 
 # yeah i still can't believe it, when i was coding ~4 years ago
 # i used to name my variables weird stuff like 'butts'
 # 'poop', 'pee' and all the likeness. weiiiiiiiird.
 # i also had my code organized in the most odd ways out there
 # like entire functions in one line sorta odd.
-# nowadays the worse i do is just giving them character names, a good bit different
+# nowadays the worst i do is just giving them character names, a good bit different
 
 
 '''
@@ -18,71 +16,24 @@ from Modules.TextInput import TextInput
 '''
 window = tkinter.Tk()
 window.geometry("500x500")
-window.title("／人◕ ‿‿ ◕人＼") # kyubey
-window.tk_setPalette("#fffafa")
+window.title("／人◕ ‿‿ ◕人＼")  # kyubey
+window.tk_setPalette("#fffafa")  # i like it slightly pink :)
 
 
 '''
 >>>>Setting up some variables that will be needed ============================================
 '''
 # for the dropdown menu
-correctionMethods = {
-    "Uncorrected",
-    "Fdr-bh",
-    "Holm",
-    "Sidak",
-    "Holm-Sidak",
-    "Bonferroni",
-    "Simes-Hochberg",
-    "Hommel",
-    "Fdr-by",
-    "Fdr-tsbh",
-    "Fdr-gbs",
-    "Fdr-tsbky"
+correctionMethods = Util.correctionNameConversions.keys()
 
-}
 dropdownText = tkinter.StringVar()
-dropdownText.set("Select a correction method")
-
-# for graphing
-graphEnabled = False
+dropdownText.set(Util.defaultCorrection)
 
 
 '''
 >>>>Defining some methods ====================================================================
 '''
-def testPlot(plotName):
-    # *sigh* this again.
-    global graphEnabled
 
-    xPoint = [i/10 for i in range(10+1)]
-    yPoint = [1/2 * np.cos(i) + .5 for i in range(10+1)]
-
-    #print(xPoint)
-    #print(yPoint)
-
-    # set up some things
-    if not graphEnabled:
-        yae.title("P Value graph for an Ontology")
-        yae.xlabel("Motif")
-        yae.ylabel("P Value")
-        yae.ylim([0,1])
-        yae.ticklabel_format(style='sci')
-        graphEnabled = True
-
-        yae.plot(xPoint,yPoint, label = plotName)
-        yae.draw()
-    else:
-        yae.plot(yPoint,xPoint, label = plotName)
-        yae.draw()
-    
-    yae.legend()
-    yae.show()
-    print("======")
-    if graphEnabled:
-        graphEnabled = False
-    # switch it once the graph is closed!
-    # also do it once :)
 
 def onEntry():
     # get all of the inputs that are used to then generate a graph.
@@ -93,31 +44,25 @@ def onEntry():
     rangeMaximum = maxRange.get()
     correctionMethod = dropdownText.get()
 
+    # make sure these are ints lest thoust be tweakin'
+    # TODO: remove this later, replace it with a validate for int inputs.
+    numCluster = int(numCluster)     if numCluster.isnumeric()   else 0
+    rangeMinimum = int(rangeMinimum) if rangeMinimum.isnumeric() else 0
+    rangeMaximum = int(rangeMaximum) if rangeMaximum.isnumeric() else 0
+
     print("Uwaa! >o<", ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
 
-    testPlot( numCluster + clusterName + rangeMinimum + "-" + rangeMaximum )
+    oPlot.glog(ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
 
-def textFocusIn(input: tkinter.Entry):
-    # clear all of the text within this input
-    input.delete(0, tkinter.END)
-    input.config(fg='black')
-
-def textFocusOut(input: tkinter.Entry):
-    input.config(fg='grey')
-    
 
 '''
 >>>>Space to declare new elements to the tkinter widget =======================================
 '''
 # entries which are all used for generating a graph.
 goOntologyEntry = TextInput(window, defaultText="Go Ontology ID")
-
 clusterNameEntry = TextInput(window, defaultText="Cluster Name")
-
 clusterNumEntry = TextInput(window, defaultText="Number of Cluster(s)")
-
 minRange = TextInput(window, defaultText="Range Minimum")
-
 maxRange = TextInput(window, defaultText="Range Maximum")
 
 # the other parts
@@ -136,7 +81,7 @@ minRange.packAndPlace(xPos=0, yPos=75)
 maxRange.packAndPlace(xPos=0, yPos=100)
 
 dropdown.pack()
-dropdown.place(x=0,y=125)
+dropdown.place(x=0, y=125)
 
 submitButton.pack()
 submitButton.place(x=250, y=0)

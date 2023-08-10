@@ -13,6 +13,9 @@ class TextInput:
         self.Element.delete(0, tkinter.END)
         self.Element.insert(0, self.defaultText)
 
+    def get(self):
+        return self.Element.get()
+
     # binded functions for focusing in and out
     def textFocusIn(self):
         currentText = self.Element.get()
@@ -26,6 +29,7 @@ class TextInput:
         currentText = self.Element.get()
 
         if currentText == "":
+            self.resetText()
             self.Element.config(fg='grey')
 
     # this is what places the entry somewhere and then binds events to it.
