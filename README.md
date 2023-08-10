@@ -1,2 +1,2 @@
 # Ontology-Graphing
-A cute, silly, and funny tool that I've made for Dr. Ribes so that he can graph Ontologies!
+A tool that parses through .csv files generated off of Ontology files from the SCD Finder and graphs their P_Values.
