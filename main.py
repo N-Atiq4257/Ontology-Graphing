@@ -44,7 +44,6 @@ def onEntry():
     rangeMaximum = maxRange.get()
     correctionMethod = dropdownText.get()
 
-    # make sure these are ints lest thoust be tweakin'
     # TODO: remove this later, replace it with a validate for int inputs.
     numCluster = int(numCluster)     if numCluster.isnumeric()   else 0
     rangeMinimum = int(rangeMinimum) if rangeMinimum.isnumeric() else 0
@@ -52,7 +51,7 @@ def onEntry():
 
     print("Uwaa! >o<", ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
 
-    oPlot.glog(ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
+    oPlot.parseAndPlot(ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
 
 
 '''

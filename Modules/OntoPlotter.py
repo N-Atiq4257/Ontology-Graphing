@@ -43,7 +43,7 @@ def testPlot(plotName, plotX, plotY):
     # also this doesn't really work LOL
 
 
-def glog(ontologyID, clusterName, clusterNum, minRange, maxRange, correctionName):
+def parseAndPlot(ontologyID, clusterName, clusterNum, minRange, maxRange, correctionName):
     # TODO: Change this path later
     ontologyPath = os.path.join(os.getcwd(), "test-data", ontologyID + ".csv")
     correctionMethod = Util.correctionNameConversions[correctionName]

@@ -21,4 +21,5 @@ correctionNameConversions = {
     "Fdr-tsbh":        "p_fdr_tsbh",
     "Fdr-gbs":         "p_fdr_gbs",
     "Fdr-tsbky":       "p_fdr_tsbky",
-} # the spacing is a bit extra i know but it's still nice :)
+}
+# the spacing is a bit extra i know but it's still nice :)
