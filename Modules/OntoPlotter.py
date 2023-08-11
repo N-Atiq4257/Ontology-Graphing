@@ -20,10 +20,10 @@ def testPlot(plotName, plotX, plotY):
 
     # set up some things
     if not graphEnabled:
-        yae.title("P Value graph for an Ontology")
+        yae.title("Graph")
         yae.xlabel("Motif")
         yae.ylabel("P Value")
-        yae.ylim([0, 1])
+        yae.ylim([-1, 1.1])
         yae.ticklabel_format(style='sci')
         graphEnabled = True
 
