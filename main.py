@@ -1,6 +1,7 @@
 import tkinter
 from Modules.TextInput import TextInput
 from Modules import Util
+from Modules import GraphReader as grapher
 import Modules.OntoPlotter as oPlot
 
 # yeah i still can't believe it, when i was coding ~4 years ago
@@ -51,7 +52,8 @@ def onEntry():
 
     print("Uwaa! >o<", ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
 
-    oPlot.parseAndPlot(ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
+    #oPlot.parseAndPlot(ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
+    grapher.graphResult(ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
 
 
 '''

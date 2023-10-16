@@ -1,6 +1,6 @@
 import pandas
 import os
-from matplotlib import pyplot as yae  # i love me some bad naming :)
+from matplotlib import pyplot as plt  # i love me some bad naming :)
 import numpy as np
 from . import Util
 
@@ -14,27 +14,28 @@ from . import Util
 graphEnabled = False
 
 
-def testPlot(plotName, plotX, plotY):
+def testPlot(plotName, plotX, plotY, goID, correction):
     # *sigh* this again.
     global graphEnabled
 
     # set up some things
     if not graphEnabled:
-        yae.title("Graph")
-        yae.xlabel("Motif")
-        yae.ylabel("P Value")
-        yae.ylim([-1, 1.1])
-        yae.ticklabel_format(style='sci')
+        plt.title("Graph for GO Ontology " + goID)
+        plt.xlabel("Motif")
+        plt.ylabel("P Value (" + correction + ")")
+        plt.ylim([-1, 1.1])
+        plt.ticklabel_format(style='sci')
         graphEnabled = True
 
-        yae.plot(plotX, plotY, label=plotName)
-        yae.draw()
+        plt.plot(plotX, plotY, label=plotName)
+        plt.draw()
+        plt.savefig("/Users/enceladus/PycharmProjects/Ontology-Graphing/test-data/" + plotName + ".jpeg")
     else:
-        yae.plot(plotX, plotY, label=plotName)
-        yae.draw()
+        plt.plot(plotX, plotY, label=plotName)
+        plt.draw()
 
-    yae.legend()
-    yae.show()
+    plt.legend()
+    plt.show()
     print("======")
     if graphEnabled:
         graphEnabled = False
@@ -43,21 +44,18 @@ def testPlot(plotName, plotX, plotY):
     # also this doesn't really work LOL
 
 
-def parseAndPlot(ontologyID, clusterName, clusterNum, minRange, maxRange, correctionName):
+def parseAndPlot(ontologyID, clusterName, clusterNum, minRange, maxRange, correctionName, dataframe):
     # TODO: Change this path later
     ontologyPath = os.path.join(os.getcwd(), "test-data", ontologyID + ".csv")
-    correctionMethod = Util.correctionNameConversions[correctionName]
+    correctionMethod = correctionName
 
-    if os.path.exists(ontologyPath) and correctionMethod is not None:
+    if correctionMethod is not None:
         print("the path exists :)")
-        # read through the csv file
-        book = pandas.read_csv(ontologyPath)
-
         # declare these 2 so that they'll be used for iloc
         startIndex = -1
         endIndex = -1
 
-        for index, line in book.iterrows():
+        for index, line in dataframe.iterrows():
             # print("looping: " + str(index))
             # we're in the cluster now?
             if line['cluster'] == clusterName:
@@ -69,24 +67,24 @@ def parseAndPlot(ontologyID, clusterName, clusterNum, minRange, maxRange, correc
                     # TODO: fix these checks since they're super rigid.
                     if line['length'] == minRange:
                         # print("this is the min range")
-                        startIndex = index
+                        startIndex = int(index)
                     elif line['length'] == maxRange:
                         # print("this is the max range.")
-                        endIndex = index + 1
+                        endIndex = int(index) + 1
                         break
                     # end of the num of clusters
                 # end of the cluster
             # end of the loop
 
         if not (startIndex == -1 or endIndex == -1):
-            result = book.iloc[startIndex:endIndex]
+            result = dataframe.iloc[startIndex:endIndex]
             # now with the result, let's turn it into a graph :)
             motifLengths = result['length'].tolist()
             pValues = result[correctionMethod].tolist()
 
             # now plot it.
             plotName = str(clusterNum) + clusterName + str(minRange) + "-" + str(maxRange)
-            testPlot(plotName, motifLengths, pValues)
+            testPlot(plotName, motifLengths, pValues, ontologyID, correctionName)
         else:
             print("one of ur indices is -1 :(")
             print(startIndex)
