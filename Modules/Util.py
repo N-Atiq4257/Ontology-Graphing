@@ -4,7 +4,7 @@
     p_uncorrected,p_fdr_bh,p_bonferroni,p_sidak,p_holm_sidak,
     p_holm,p_simes_hochberg,p_hommel,p_fdr_by,p_fdr_tsbh,p_fdr_gbs,p_fdr_tsbky
 """
-
+#GO:0006281
 # hashtable that contains the conversion from their name in gui to the name in the csv file
 defaultCorrection = "Select a correction method"
 correctionNameConversions = {

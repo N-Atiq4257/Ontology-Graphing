@@ -1,3 +1,6 @@
+import math
+import threading
+
 import requests
 import time
 import pandas
@@ -10,11 +13,14 @@ session = requests.Session()
 '''
 A function that calls to my instance in order to get a json result that is then turned into a pandas dataframe.
 '''
+
+
 def getGraph(ontology='GO:0030421', clusterName='SCD', clusterNum=3, minRange=100, maxRange=105):
     print("calling the cherrypy server...")
     # call the cherrypy server.
     r = session.get("http://scd.ustcomputing.org:8012/scd/get_graph/",
-                    params={'Ontology': ontology, 'Cluster': clusterName, 'Repetition': clusterNum, 'LengthMin': minRange,
+                    params={'Ontology': ontology, 'Cluster': clusterName, 'Repetition': clusterNum,
+                            'LengthMin': minRange,
                             'LengthMax': maxRange})
     if not (r.text == "NO PATH" or r.status_code == 502):
 
@@ -35,12 +41,16 @@ def graphResult(ontology='GO:0030421', clusterName='SCD', clusterNum=3, minRange
 
     correction = Util.correctionNameConversions[correctionMethod]
     book = getGraph(ontology, clusterName, clusterNum, minRange, maxRange)
+
     # for the ones that the server might wanna generate.
     foundLengths = []
     missingDefs = []
+
     # if the dataframe exists, we'll read through it to see.
     if not book.empty:
+
         for index, line in book.iterrows():
+
             # we're in the cluster now?
             if line['cluster'] == clusterName:
                 # we are!
@@ -64,9 +74,9 @@ def graphResult(ontology='GO:0030421', clusterName='SCD', clusterNum=3, minRange
             missingDefs.append(missingDef)
             print(" " + missingDef)
 
-    # send a post request to deal with the missing ones now.
     if not len(missingDefs) == 0:
         print("a")
+        # send a post request to deal with the missing ones now.
         r = session.post("http://scd.ustcomputing.org:8012/scd/generate_graphs/",
                          params={'Definitions': missingDefs,
                                  'Ontology': ontology,

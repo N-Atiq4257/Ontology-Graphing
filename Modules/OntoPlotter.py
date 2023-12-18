@@ -52,10 +52,17 @@ def parseAndPlot(ontologyID, clusterName, clusterNum, minRange, maxRange, correc
     if correctionMethod is not None:
         print("the path exists :)")
         # declare these 2 so that they'll be used for iloc
-        startIndex = -1
-        endIndex = -1
 
-        for index, line in dataframe.iterrows():
+        # let's not :)
+        #startIndex = -1
+        #endIndex = -1
+
+        pValues = []
+        motifLengths = []
+
+        sortedFrame = dataframe.sort_values(by=['cluster','number_clusters','length'])
+
+        for index, line in sortedFrame.iterrows():
             # print("looping: " + str(index))
             # we're in the cluster now?
             if line['cluster'] == clusterName:
@@ -64,6 +71,8 @@ def parseAndPlot(ontologyID, clusterName, clusterNum, minRange, maxRange, correc
                 if line['number_clusters'] == clusterNum:
                     # it is!
                     # is this the minimum range?
+
+                    '''
                     # TODO: fix these checks since they're super rigid.
                     if line['length'] == minRange:
                         # print("this is the min range")
@@ -72,12 +81,21 @@ def parseAndPlot(ontologyID, clusterName, clusterNum, minRange, maxRange, correc
                         # print("this is the max range.")
                         endIndex = int(index) + 1
                         break
+                    '''
+                    if minRange <= line['length'] <= maxRange:
+                        pValues.append(line[correctionMethod])
+                        motifLengths.append(line['length'])
+
                     # end of the num of clusters
                 # end of the cluster
             # end of the loop
 
+
+        plotName = str(clusterNum) + clusterName + str(minRange) + "-" + str(maxRange)
+        testPlot(plotName, motifLengths, pValues, ontologyID, correctionName)
+        '''
         if not (startIndex == -1 or endIndex == -1):
-            result = dataframe.iloc[startIndex:endIndex]
+            #result = dataframe.iloc[startIndex:endIndex]
             # now with the result, let's turn it into a graph :)
             motifLengths = result['length'].tolist()
             pValues = result[correctionMethod].tolist()
@@ -89,5 +107,7 @@ def parseAndPlot(ontologyID, clusterName, clusterNum, minRange, maxRange, correc
             print("one of ur indices is -1 :(")
             print(startIndex)
             print(endIndex)
+        '''
+
     else:
         print("no path or the correction method is none :(")
