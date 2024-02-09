@@ -59,6 +59,7 @@ def graphResult(ontology='GO:0030421', clusterName='SCD', clusterNum=3, minRange
                     # it is!
                     # if the length is inbetween the min and max, we'll add it!
                     if minRange <= line['length'] <= maxRange:
+                        print(line)
                         foundLengths.append(line['length'])
                         # we're having a list of integers since that's the one part that differs for the graph, really.
 

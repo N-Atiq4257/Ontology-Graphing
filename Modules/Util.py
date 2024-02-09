@@ -21,5 +21,6 @@ correctionNameConversions = {
     "Fdr-tsbh":        "p_fdr_tsbh",
     "Fdr-gbs":         "p_fdr_gbs",
     "Fdr-tsbky":       "p_fdr_tsbky",
+    "Fold Enrichment": "fold_enrichment",
 }
 # the spacing is a bit extra i know but it's still nice :)
