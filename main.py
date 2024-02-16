@@ -17,9 +17,8 @@ import Modules.OntoPlotter as oPlot
 '''
 window = tkinter.Tk()
 window.geometry("500x500")
-window.title("／人◕ ‿‿ ◕人＼")  # kyubey
+window.title("Ontology Grapher!")
 window.tk_setPalette("#fffafa")  # i like it slightly pink :)
-
 
 '''
 >>>>Setting up some variables that will be needed ============================================
@@ -30,13 +29,31 @@ correctionMethods = Util.correctionNameConversions.keys()
 dropdownText = tkinter.StringVar()
 dropdownText.set(Util.defaultCorrection)
 
-
 '''
 >>>>Defining some methods ====================================================================
 '''
 
 
 def onEntry():
+    # get all of the inputs that are used to then generate a graph.
+    ontologyID       = goOntologyEntry.get()
+    clusterName      = clusterNameEntry.get()
+    numCluster       = clusterNumEntry.get()
+    rangeMinimum     = minRange.get()
+    rangeMaximum     = maxRange.get()
+    correctionMethod = dropdownText.get()
+
+
+    numCluster   = int(numCluster)   if numCluster.isnumeric()   else 0
+    rangeMinimum = int(rangeMinimum) if rangeMinimum.isnumeric() else 0
+    rangeMaximum = int(rangeMaximum) if rangeMaximum.isnumeric() else 0
+
+    Util.log.updateText("WAWAWAWAWA!!!!")
+
+    grapher.generateGraphs(ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
+
+
+def viewGraph():
     # get all of the inputs that are used to then generate a graph.
     ontologyID = goOntologyEntry.get()
     clusterName = clusterNameEntry.get()
@@ -46,13 +63,12 @@ def onEntry():
     correctionMethod = dropdownText.get()
 
     # TODO: remove this later, replace it with a validate for int inputs.
-    numCluster = int(numCluster)     if numCluster.isnumeric()   else 0
+    numCluster =   int(numCluster)   if numCluster.isnumeric()   else 0
     rangeMinimum = int(rangeMinimum) if rangeMinimum.isnumeric() else 0
     rangeMaximum = int(rangeMaximum) if rangeMaximum.isnumeric() else 0
 
-    print("Uwaa! >o<", ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
+    Util.log.updateText("WAWAWAWAWA!!!!")
 
-    #oPlot.parseAndPlot(ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
     grapher.graphResult(ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
 
 
@@ -69,7 +85,10 @@ maxRange = TextInput(window, defaultText="Range Maximum")
 # the other parts
 dropdown = tkinter.OptionMenu(window, dropdownText, *correctionMethods)
 
-submitButton = tkinter.Button(window, text="Submit Graph", height=10, width=20)
+submitButton = tkinter.Button(window, text="Submit Graph", height=5, width=20)
+viewButton = tkinter.Button(window, text="View Graph", height=5, width=20)
+
+log = tkinter.Text(window, height=23, width=68, wrap=tkinter.WORD)
 
 
 '''
@@ -88,6 +107,13 @@ submitButton.pack()
 submitButton.place(x=250, y=0)
 submitButton.bind("<Button>", lambda w: onEntry())
 
+viewButton.pack()
+viewButton.place(x=250, y=90)
+viewButton.bind("<Button>", lambda w: viewGraph())
+
+Util.log.setup(window) # test idk lol
+Util.log.msg.pack()
+Util.log.msg.place(x=0, y=185)
 
 '''
 >>>>Run the window! :) =======================================================================

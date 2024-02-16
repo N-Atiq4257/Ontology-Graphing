@@ -19,11 +19,18 @@ def testPlot(plotName, plotX, plotY, goID, correction):
     global graphEnabled
 
     # set up some things
+    # really quickly lets set the limit.
+    max = 1.1
+    for point in plotY:
+        if point > max:
+            max = point
+
+
     if not graphEnabled:
         plt.title("Graph for GO Ontology " + goID)
         plt.xlabel("Motif")
         plt.ylabel("P Value (" + correction + ")")
-        plt.ylim([-1, 1.1])
+        plt.ylim([-.5, max])
         plt.ticklabel_format(style='sci')
         graphEnabled = True
 
@@ -89,7 +96,6 @@ def parseAndPlot(ontologyID, clusterName, clusterNum, minRange, maxRange, correc
                     # end of the num of clusters
                 # end of the cluster
             # end of the loop
-
 
         plotName = str(clusterNum) + clusterName + str(minRange) + "-" + str(maxRange)
         testPlot(plotName, motifLengths, pValues, ontologyID, correctionName)
