@@ -36,7 +36,6 @@ def testPlot(plotName, plotX, plotY, goID, correction):
 
         plt.plot(plotX, plotY, label=plotName)
         plt.draw()
-        plt.savefig("/Users/enceladus/PycharmProjects/Ontology-Graphing/test-data/" + plotName + ".jpeg")
     else:
         plt.plot(plotX, plotY, label=plotName)
         plt.draw()
