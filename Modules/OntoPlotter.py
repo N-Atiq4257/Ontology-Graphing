@@ -30,7 +30,7 @@ def testPlot(plotName, plotX, plotY, goID, correction):
         plt.title("Graph for GO Ontology " + goID)
         plt.xlabel("Motif")
         plt.ylabel("P Value (" + correction + ")")
-        plt.ylim([-.5, max])
+        plt.ylim([-.5, max + .33])
         plt.ticklabel_format(style='sci')
         graphEnabled = True
 
