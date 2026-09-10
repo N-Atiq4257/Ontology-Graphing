@@ -33,8 +33,7 @@ def getGraph(ontology='GO:0030421', clusterName='SCD', clusterNum=3, minRange=10
         return pandas.DataFrame.from_dict(graphFile)
     elif r.status_code == 502 or r.status_code == 503:
         # if the instance is off or website is not on, return this.
-        Util.log.updateText("The server is either off or encountered an error. :(\nCheck the status of the server "
-                            "here: http://scd.ustcomputing.org:8012/scd/ ")
+        Util.log.updateText("The server is either off or encountered an error. :(")
         return None
     elif r.text == "NO PATH":
         return pandas.DataFrame()
