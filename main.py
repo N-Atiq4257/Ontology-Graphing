@@ -4,14 +4,6 @@ from Modules import Util
 from Modules import GraphReader as grapher
 import Modules.OntoPlotter as oPlot
 
-# yeah i still can't believe it, when i was coding ~4 years ago
-# i used to name my variables weird stuff like 'butts'
-# 'poop', 'pee' and all the likeness. weiiiiiiiird.
-# i also had my code organized in the most odd ways out there
-# like entire functions in one line sorta odd.
-# nowadays the worst i do is just giving them character names, a good bit different
-
-
 '''
 >>>>Setting up a tkinter widget ==============================================================
 '''
@@ -48,7 +40,7 @@ def onEntry():
     rangeMinimum = int(rangeMinimum) if rangeMinimum.isnumeric() else 0
     rangeMaximum = int(rangeMaximum) if rangeMaximum.isnumeric() else 0
 
-    Util.log.updateText("WAWAWAWAWA!!!!")
+    Util.log.updateText("Running!!!!")
 
     grapher.generateGraphs(ontologyID, clusterName, numCluster, rangeMinimum, rangeMaximum, correctionMethod)
 
