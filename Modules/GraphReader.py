@@ -9,6 +9,11 @@ from . import Util
 
 # set up the session.
 session = requests.Session()
+# and for the name of the server, you should put it here. 
+# The server that this was used for ran a CherryPy backend with
+# Redis being the message broker.
+server_name = ""
+
 
 '''
 A function that calls to my instance in order to get a json result that is then turned into a pandas dataframe.
@@ -16,7 +21,7 @@ A function that calls to my instance in order to get a json result that is then 
 def getGraph(ontology='GO:0030421', clusterName='SCD', clusterNum=3, minRange=100, maxRange=105):
     print("calling the cherrypy server...")
     # call the cherrypy server.
-    r = session.get("http://scd.ustcomputing.org:8012/scd/get_graph/",
+    r = session.get(server_name,
                     params={'Ontology': ontology, 'Cluster': clusterName, 'Repetition': clusterNum,
                             'LengthMin': minRange,
                             'LengthMax': maxRange})
