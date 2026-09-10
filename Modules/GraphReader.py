@@ -126,9 +126,7 @@ def graphResult(ontology='GO:0030421', clusterName='SCD', clusterNum=3, minRange
                 correctionMethod=Util.defaultCorrection):
     book = getGraph(ontology, clusterName, clusterNum, minRange, maxRange)
     if book is None:
-        Util.log.updateText("The server is either off or encountered an error. :(\nCheck the status of the server "
-                            "here: "
-                            "http://scd.ustcomputing.org:8012/scd/ ")
+        Util.log.updateText("The server is either off or encountered an error. :(")
         return
 
     missingDefs = getMissingLengths(book, clusterName, clusterNum, minRange, maxRange)
